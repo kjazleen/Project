@@ -60,8 +60,8 @@ filemenu.add_command(label="Exit", command=exit)
 editmenu = Menu(master)
 menu.add_cascade(label="Edit" ,menu = editmenu)
 def copy():
-    text.clipboard_clear()
-    text.clipboard_append(text.selection_get())
+    text.event_generate("<<Copy>>")
+    return "break"
 editmenu.add_command(label="Copy", command = copy)
 def paste():
     try:
@@ -76,6 +76,11 @@ editmenu.add_command(label="Undo",command=undo)
 def redo():
     text.edit_redo()
 editmenu.add_command(label="Redo",command=redo)
+
+def selectall(event=None):
+    text.tag_add('sel','1.0','end')
+    return "break"
+editmenu.add_command(label="Select all",command=selectall)
 editmenu.add_separator()
 def clearall():
     text.delete(1.0 , END)
@@ -139,7 +144,7 @@ scroll.config(command=text.yview)
 text.config(yscrollcommand=scroll.set)
 scroll.pack(side=RIGHT, fill='y')
 
-def get_line_numbers():
+'''def get_line_numbers():
     output = ''
     if show_line_number.get():
         row, col =text.index("end").split('.')
@@ -187,7 +192,7 @@ show_line_number.set(1)
 view_menu.add_checkbutton(label="Show Line Number", variable=show_line_number)
 show_cursor_info=IntVar()
 show_cursor_info.set(1)
-view_menu.add_checkbutton(label='Show Cursor Location at Bottom', variable=show_cursor_info, command=show_cursor)
+view_menu.add_checkbutton(label='Show Cursor Location at Bottom', variable=show_cursor_info, command=show_cursor)'''
 
 
 new_file_icon = PhotoImage(file='icons/new.gif')
